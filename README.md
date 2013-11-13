@@ -22,3 +22,5 @@ http://boombatower.github.io/chromecast-dashboard/sender/
 # Enjoy! #
 
 ![Photo of dashboard running on Chromecast](tv.jpeg)
+
+[StatCounter stats](http://statcounter.com/p9400224/summary/?guest=1)
