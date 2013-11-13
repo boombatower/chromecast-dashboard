@@ -1,9 +1,9 @@
-# Chromecast Dashboard #
+# Description #
 
 A simple dashboard application for Chromecast. Display any web page accessible
 by the Chromecast device.
 
-# Whitelist domain in Chromecast extension #
+# Whitelist domain #
 
 Currently, all applications need to be whitelisted in the Chromecast extension.
 
@@ -19,4 +19,3 @@ Visit the following Url for the sender portion of the application.
 
 http://boombatower.github.io/chromecast-dashboard/sender/
 
-Fill in the Url to display and refresh interval if desired/necessary.
