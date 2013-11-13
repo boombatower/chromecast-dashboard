@@ -2,6 +2,9 @@
  * Main JavaScript for handling Chromecast interactions.
  */
 
+var appId = '2c6e7388-90e6-422f-a9d8-4188399c8d5a';
+var namespace = 'boombatower.chromecast-dashboard';
+
 var cast_api,
     cv_activity,
     receiverList,
@@ -19,7 +22,7 @@ window.addEventListener('message', function(event) {
 initializeApi = function() {
   if (!cast_api) {
     cast_api = new cast.Api();
-    cast_api.addReceiverListener('2c6e7388-90e6-422f-a9d8-4188399c8d5a', onReceiverList);
+    cast_api.addReceiverListener(appId, onReceiverList);
   }
 };
 
@@ -48,7 +51,7 @@ receiverClicked = function(e) {
 
 doLaunch = function(receiver) {
   if (!cv_activity) {
-    var request = new cast.LaunchRequest('2c6e7388-90e6-422f-a9d8-4188399c8d5a', receiver);
+    var request = new cast.LaunchRequest(appId, receiver);
 
     $killSwitch.prop('disabled', false);
     $postNote.show();
@@ -61,7 +64,7 @@ onLaunch = function(activity) {
   if (activity.status === 'running') {
     cv_activity = activity;
 
-    cast_api.sendMessage(cv_activity.activityId, 'boombatower', {
+    cast_api.sendMessage(cv_activity.activityId, namespace, {
       type: 'load',
       url: $('#url').val(),
       refresh: $('#refresh').val()

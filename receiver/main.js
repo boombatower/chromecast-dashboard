@@ -2,10 +2,13 @@
  * Main JavaScript for handling Chromecast interactions.
  */
 
+var appId = '2c6e7388-90e6-422f-a9d8-4188399c8d5a';
+var namespace = 'boombatower.chromecast-dashboard';
+
 $(function() {
-  var receiver = new cast.receiver.Receiver('2c6e7388-90e6-422f-a9d8-4188399c8d5a', ['boombatower']);
-  var channelHandler = new cast.receiver.ChannelHandler('boombatower');
-  channelHandler.addChannelFactory(receiver.createChannelFactory('boombatower'));
+  var receiver = new cast.receiver.Receiver(appId, [namespace]);
+  var channelHandler = new cast.receiver.ChannelHandler(namespace);
+  channelHandler.addChannelFactory(receiver.createChannelFactory(namespace));
   receiver.start();
   channelHandler.addEventListener(cast.receiver.Channel.EventType.MESSAGE, onMessage.bind(this));
 
