@@ -8,7 +8,7 @@
   </head>
   <body>
     <iframe id="dashboard" scrolling="no"></iframe>
-    <div class="loading wave">Loading</div>
+    <div id="loading" class="loading wave">Loading</div>
   </body>
 
   <!-- Post load all the goods used to interact with sender. -->
@@ -43,6 +43,11 @@
         setTimeout(reloadDashboard, $('#dashboard').attr('data-refresh'));
       }
     }
+
+    $('#dashboard').load(function() {
+      $('#loading').hide();
+      console.log('Loading animation hidden.');
+    });
   });
   </script>
 </html>
