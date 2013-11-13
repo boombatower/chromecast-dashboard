@@ -5,7 +5,8 @@
 var cast_api,
     cv_activity,
     receiverList,
-    $killSwitch = $('.kill');
+    $killSwitch = $('#kill'),
+    $postNote = $('#post-note');
 
 window.addEventListener('message', function(event) {
   if (event.source === window && event.data &&
@@ -50,6 +51,7 @@ doLaunch = function(receiver) {
     var request = new cast.LaunchRequest('2c6e7388-90e6-422f-a9d8-4188399c8d5a', receiver);
 
     $killSwitch.prop('disabled', false);
+    $postNote.show();
 
     cast_api.launch(request, onLaunch);
   }
@@ -72,5 +74,6 @@ $killSwitch.on('click', function() {
     cv_activity = null;
 
     $killSwitch.prop('disabled', true);
+    $postNote.hide();
   });
 });

@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Cabin+Condensed:700">
   </head>
   <body>
+    <p>
+      Enter a Url for to display on dashboard and if the page does not update
+      itself then enter an appropriate refresh interval in seconds.
+    </p>
     <label>Url <input type="text" id="url" value="http://drupal.org/"></label>
     <label>Refresh <input type="number" id="refresh" min="0" value="0"></label>
     <fieldset class="receiver">
@@ -14,9 +18,14 @@
         <li>Looking for receivers&hellip;</li>
       </ul>
     </fieldset>
-    <button class="kill" disabled>Stop casting</button>
+    <button id="kill" disabled>Stop casting</button>
+    <p id="post-note" style="display: none">
+      If the page does not load please be sure HTTP header X-Frame-Options
+      allows the page to be loaded inside a frame not on the same origin.
+    </p>
   </body>
 
+  <!-- Post load all the goods used to interact with Chromecast/receiver. -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="http://underscorejs.org/underscore-min.js"></script>
   <script src="main.js"></script>
