@@ -1,0 +1,65 @@
+/**
+ * Adapted from http://codepen.io/lbebber/pen/xrwja.
+ *
+ * Replaced all the fancy auto-prefixing and CSS variables with raw outpout.
+ * Grabbed directly form Chromium which even formats the CSS. :)
+ *
+ * Downloaded the imgur png as loading.png.
+ *
+ * Since only targeting Chromecast the non-chrome stuff can be removed. All that
+ * remains is a thing of beauty.
+ */
+
+body {
+  background: #141414;
+}
+
+.loading {
+  text-transform: uppercase;
+  font-family: 'Cabin Condensed', sans-serif;
+  font-weight: bold;
+  font-size: 100pt;
+  text-align: center;
+  height: 120px;
+  line-height: 110px;
+  vertical-align: bottom;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  bottom: 0;
+  display: block;
+}
+
+@-webkit-keyframes wave-animation {
+  0% {
+    background-position: 0 bottom;
+  }
+
+  100% {
+    background-position: 200px bottom;
+  }
+}
+
+@-webkit-keyframes loading-animation {
+  0% {
+    background-size: 200px 0px;
+  }
+
+  100% {
+    background-size: 200px 200px;
+  }
+}
+
+.wave {
+  background-image: url("loading.png");
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0px 0px rgba(255, 255, 255, 0.06);
+  -webkit-animation: wave-animation 1s infinite linear, loading-animation 10s infinite linear alternate;
+  background-size: 200px 100px;
+  background-repeat: repeat-x;
+  opacity: 1;
+}
