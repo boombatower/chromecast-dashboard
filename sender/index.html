@@ -3,17 +3,18 @@
     <title>Chromecast dashboard</title>
 
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Cabin+Condensed:700">
   </head>
   <body>
+    <label>Url <input type="text" id="url" value="http://drupal.org/"></label>
+    <label>Refresh <input type="number" id="refresh" min="0" value="0"></label>
     <fieldset class="receiver">
-      <legend>Choose a receiver</legend>
+      <legend>Cast dashboard to&hellip;</legend>
       <ul class="receiver-list">
-        <li>Looking for receivers...</li>
+        <li>Looking for receivers&hellip;</li>
       </ul>
     </fieldset>
-    <input type="text" id="url" value="http://drupal.org/">
-    <input type="number" id="refresh" min="0" value="0">
-    <button class="kill" disabled>Kill the Connection</button>
+    <button class="kill" disabled>Stop casting</button>
   </body>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>

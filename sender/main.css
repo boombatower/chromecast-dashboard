@@ -5,8 +5,13 @@
 body {
   margin: 10px auto;
   padding: 0;
-  width: 200px;
-  background-image: -webkit-radial-gradient(center center, circle cover, #eee, #ccc);
+  max-width: 200px;
+  min-width: 300px;
+  background-color: #ccc; /* fallback */
+  background: radial-gradient(ellipse at center, #eee, #ccc);
+  font-family: 'Cabin Condensed', sans-serif;
+  font-weight: bold;
+  font-size: 15pt;
 }
 #dashboard {
   width: 100%;
@@ -22,18 +27,30 @@ input, textarea {
   width: 100%;
 }
 input:focus, textarea:focus {
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  box-shadow: 0 0 15px #ccc;
   padding: 3px 0px 3px 3px;
   margin: 5px 1px 3px 0px;
-  border: 1px solid rgba(81, 203, 238, 1);
+  border: 1px solid #ccc;
 }
 .receiver {
+  margin: 10px 0;
   border: 1px solid #666;
+  box-shadow: 0 0 15px #666;
   border-radius: 5px;
   padding: 5px;
+}
+.receiver legend {
+  padding: 2px 10px;
+  background-color: #eee;
+  border: 1px solid #666;
+  border-radius: 5px;
 }
 .receiver-list {
   list-style: none;
   padding-left: 0px;
   margin: 3px;
+}
+.kill:disabled {
+  display: none;
+  background-color: red;
 }
