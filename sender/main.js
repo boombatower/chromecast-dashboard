@@ -12,7 +12,8 @@ var cast_api,
     $postNote = $('#post-note');
 
 window.addEventListener('message', function(event) {
-  if (event.source === window && event.data &&
+  if (event.source === window &&
+      event.data &&
       event.data.source === 'CastApi' &&
       event.data.event === 'Hello') {
     initializeApi();
@@ -41,10 +42,10 @@ onReceiverList = function(list) {
 receiverClicked = function(e) {
   e.preventDefault();
 
-  var $target = $(e.target),
-    receiver = _.find(receiverList, function(receiver) {
-      return receiver.id === $target.data('id');
-    });
+  var $target = $(e.target);
+  var receiver = _.find(receiverList, function(receiver) {
+    return receiver.id === $target.data('id');
+  });
 
   doLaunch(receiver);
 };
