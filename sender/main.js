@@ -2,82 +2,90 @@
  * Main JavaScript for handling Chromecast interactions.
  */
 
-var appId = '2c6e7388-90e6-422f-a9d8-4188399c8d5a';
-var namespace = 'boombatower.chromecast-dashboard';
+var applicationID = 'F7FD2183';
+var namespace = 'urn:x-cast:com.boombatower.chromecast-dashboard';
+var session = null;
 
-var cast_api,
-    cv_activity,
-    receiverList,
-    $killSwitch = $('#kill'),
-    $postNote = $('#post-note');
+if (!chrome.cast || !chrome.cast.isAvailable) {
+  setTimeout(initializeCastApi, 1000);
+}
 
-window.addEventListener('message', function(event) {
-  if (event.source === window &&
-      event.data &&
-      event.data.source === 'CastApi' &&
-      event.data.event === 'Hello') {
-    initializeApi();
+function initializeCastApi() {
+  var sessionRequest = new chrome.cast.SessionRequest(applicationID);
+  var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
+    sessionListener,
+    receiverListener);
+
+  chrome.cast.initialize(apiConfig, onInitSuccess, onError);
+};
+
+function onInitSuccess() {
+  console.log('onInitSuccess');
+}
+
+function onError(message) {
+  console.log('onError: ' + JSON.stringify(message));
+}
+
+function onSuccess(message) {
+  console.log('onSuccess: ' + JSON.stringify(message));
+
+  if (message['type'] == 'load') {
+    $('#kill').prop('disabled', false);
+    $('#post-note').show();
   }
-});
+}
 
-initializeApi = function() {
-  if (!cast_api) {
-    cast_api = new cast.Api();
-    cast_api.addReceiverListener(appId, onReceiverList);
+function onStopAppSuccess() {
+  console.log('onStopAppSuccess');
+
+  $('#kill').prop('disabled', true);
+  $('#post-note').hide();
+}
+
+function sessionListener(e) {
+  console.log('New session ID: ' + e.sessionId);
+  session = e;
+  session.addUpdateListener(sessionUpdateListener);
+}
+
+function sessionUpdateListener(isAlive) {
+  console.log((isAlive ? 'Session Updated' : 'Session Removed') + ': ' + session.sessionId);
+  if (!isAlive) {
+    session = null;
   }
 };
 
-onReceiverList = function(list) {
-  if (list.length > 0) {
-    receiverList = list;
-    $('.receiver-list').empty();
-    receiverList.forEach(function(receiver) {
-      $listItem = $('<li><a href="#" data-id="' + receiver.id + '">' + receiver.name + '</a></li>');
-      $listItem.on('click', receiverClicked);
-      $('.receiver-list').append($listItem);
-    });
+function receiverListener(e) {
+  if (e !== 'available') {
+    alert('No Chromecast receivers available');
   }
-};
+}
 
-receiverClicked = function(e) {
-  e.preventDefault();
+function sendMessage(message) {
+  if (session != null) {
+    session.sendMessage(namespace, message, onSuccess.bind(this, message), onError);
+  }
+  else {
+    chrome.cast.requestSession(function(e) {
+      session = e;
+      sessionListener(e);
+      session.sendMessage(namespace, message, onSuccess.bind(this, message), onError);
+    }, onError);
+  }
+}
 
-  var $target = $(e.target);
-  var receiver = _.find(receiverList, function(receiver) {
-    return receiver.id === $target.data('id');
+function stopApp() {
+  session.stop(onStopAppSuccess, onError);
+}
+
+function connect() {
+  console.log('connect()');
+  sendMessage({
+    type: 'load',
+    url: $('#url').val(),
+    refresh: $('#refresh').val(),
   });
+}
 
-  doLaunch(receiver);
-};
-
-doLaunch = function(receiver) {
-  if (!cv_activity) {
-    var request = new cast.LaunchRequest(appId, receiver);
-
-    $killSwitch.prop('disabled', false);
-    $postNote.show();
-
-    cast_api.launch(request, onLaunch);
-  }
-};
-
-onLaunch = function(activity) {
-  if (activity.status === 'running') {
-    cv_activity = activity;
-
-    cast_api.sendMessage(cv_activity.activityId, namespace, {
-      type: 'load',
-      url: $('#url').val(),
-      refresh: $('#refresh').val()
-    });
-  }
-};
-
-$killSwitch.on('click', function() {
-  cast_api.stopActivity(cv_activity.activityId, function(){
-    cv_activity = null;
-
-    $killSwitch.prop('disabled', true);
-    $postNote.hide();
-  });
-});
+$('#kill').on('click', stopApp);
