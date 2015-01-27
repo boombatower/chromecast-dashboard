@@ -3,15 +3,16 @@
 A simple dashboard application for Chromecast. Display any web page accessible
 by the Chromecast device.
 
-# Whitelist domain #
+# Benefits #
 
-Currently, all applications need to be whitelisted in the Chromecast extension.
+Unlike tab casting (or screen casting) which requires the sender device to
+remain active in order to encode a video+audio feed that is sent to the
+Chromecast this approach renders the web page directly on the Chromecast which
+has two primary benefits.
 
-1. Right-click on the Chromecast extension icon (cast symbol) and select Options
-1. Double click twice (four clicks) on the Cast symbol on the Options page
-1. Add the `boombatower.github.io` as an additional domain (see screenshot)
-
-![Add domain to Chromecast extension](add-domain.png)
+1. The sender device can be disconnected from the Chromecast
+2. There is no constant network usage required to send video+audio feed as the
+   page is entirely rendered on the Chromecast.
 
 # Usage #
 
