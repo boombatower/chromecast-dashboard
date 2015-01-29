@@ -11,8 +11,7 @@ Chromecast this approach renders the web page directly on the Chromecast which
 has two primary benefits.
 
 1. The sender device can be disconnected from the Chromecast
-2. There is no constant network usage required to send video+audio feed as the
-   page is entirely rendered on the Chromecast.
+2. There is no constant network usage required to send video+audio feed
 
 # Usage #
 
