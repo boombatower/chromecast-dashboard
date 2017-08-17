@@ -89,3 +89,19 @@ function connect() {
 }
 
 $('#kill').on('click', stopApp);
+
+// Populate input fields from query params
+$(function () {
+  if (!'URLSearchParams' in window) {
+    return;
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  if (params.has('url')) {
+    $('#url').val(params.get('url'));
+  }
+
+  if (params.has('refresh')) {
+    $('#refresh').val(params.get('refresh'));
+  }
+});
